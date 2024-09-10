@@ -4,7 +4,10 @@
 
 @layer components {
   .blue-button {
-    @apply bg-[#002d75] hover:bg-[#0246b3] p-1 pl-4 pr-4 rounded shadow-xl
+    @apply bg-[#002d75] hover:bg-[#0246b3] p-1 pl-4 pr-4 rounded shadow-xl text-center
+  }
+  .input { 
+    @apply rounded p-1
   }
 }
 
