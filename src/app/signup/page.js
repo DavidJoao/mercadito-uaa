@@ -41,9 +41,10 @@ const page = () => {
                 <input required name="password" id="password" placeholder="*********" className="input" type="password" onChange={handleChange}/>
                 <label>Confirme Contraseña</label>
                 <input required placeholder="*********" className="input" type="password" onChange={(e) => setConfirm(e.target.value)}/>
-                { form.password === confirm ? ( <></> ) : ( <p className="red-button text-white font-bold">Las contraseñas no coinciden</p> ) }
-                <button className="mt-5 blue-button text-white" disabled={form.password === confirm ? false : true}>Registrarse</button>
+                { form.password === confirm ? ( <></> ) : ( <p className="red-button text-white font-bold mt-2">Las contraseñas no coinciden</p> ) }
+                <button className="mt-2 blue-button text-white" disabled={form.password === confirm ? false : true}>Registrarte</button>
                 <Link className="mt-5 text-center underline" href={'/login'}>Ya tienes una cuenta? Inicia sesión aquí</Link>
+                
             </form>
         </div>
     </div>
