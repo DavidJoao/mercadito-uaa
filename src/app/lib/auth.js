@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { PrismaAdapter } from "next-auth/adapters"
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import NextAuth from 'next-auth'
@@ -7,9 +7,7 @@ import NextAuth from 'next-auth'
 const authOptions = { 
     adapter: PrismaAdapter(db),
     secret: process.env.NEXTAUTH_SECRET,
-    session: {
-        strategy: 'jwt'
-    },
+    session: { strategy: 'jwt'},
     pages: {
         signIn: '/login'
     },
@@ -25,14 +23,14 @@ const authOptions = {
                     return null
                 }
 
-                // const existingUser = await db.findUser     FINISH AFTER CONNECTING MONGO
-                // if (!existingUser) return null
+                const existingUser = await db.findUser
+                if (!existingUser) return null
 
-                // const passwordMatch = await bcrypt.compare(credentials.password, existingUser.password)
-                // if (!passwordMatch) return null
+                const passwordMatch = await bcrypt.compare(credentials.password, existingUser.password)
+                if (!passwordMatch) return null
 
                 return {
-                    // user: existingUser
+                    user: existingUser
                 }
 
             }
