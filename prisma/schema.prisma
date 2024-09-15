@@ -18,6 +18,7 @@ model User {
   name     String
   email    String   @unique
   password String
+  role     String
   posts    Post[]
 }
 
@@ -25,6 +26,16 @@ model Post {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   title     String
   content   String
+  phone     String
+  date      DateTime
   authorId  String   @db.ObjectId
   author    User     @relation(fields: [authorId], references: [id])
+  images    Image[]
+}
+
+model Image { 
+  id        String  @id @default(auto()) @map("_id")  @db.ObjectId
+  src       String  
+  imageId   String  @db.ObjectId
+  image     Post    @relation(fields: [imageId], references: [id])
 }
