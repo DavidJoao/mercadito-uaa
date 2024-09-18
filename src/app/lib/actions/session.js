@@ -15,7 +15,7 @@ export async function logoutUser () {
 
 export async function authenticate ( formData ) {
     try {
-        await signIn('credentials', {
+        await signIn("credentials", {
             email: formData.email,
             password: formData.password,
             redirect: true,

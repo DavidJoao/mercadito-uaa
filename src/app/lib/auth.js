@@ -1,64 +1,60 @@
 import { db } from "./db";
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import CredentialsProvider from "next-auth/providers/credentials";
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import Credentials from "next-auth/providers/credentials";
 import bcrypt from 'bcryptjs'
 import NextAuth from 'next-auth'
 
-const authOptions = {
+export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(db),
     secret: process.env.NEXTAUTH_SECRET,
-    session: {
-        strategy: 'jwt'
-    },
+    session: { strategy: "jwt" },
     pages: {
-        signIn: '/login'
+        signIn: "/login"
     },
     providers: [
-        CredentialsProvider({
+        Credentials({
             name: "Credentials",
             credentials: {
-                email: { label: "Email", type: "email", placeholder: "example@gmail.com" },
-                password: { label: "Password", type: "password" },
+                email: {},
+                password: {},
             },
-            async authorize(credentials) {
-    
-                if(!credentials?.email || !credentials?.password) {
-                    return null
+            authorize: async (credentials) => {
+                if (!credentials?.email || !credentials?.password) {
+                    throw new Error("Invalid credentials");
                 }
-    
-                const existingUser = await db.user.findUnique({ where: { email: credentials.email } })
-    
+
+                let existingUser = await db.user.findUnique({ where: { email: credentials?.email } })
+
                 if (!existingUser) return null;
-    
+
                 const passwordMatch = await bcrypt.compare(credentials.password, existingUser.password)
-    
+
                 if (!passwordMatch) return null
 
-                const { password, ...userWithoutPassword } = existingUser;
-                return JSON.parse(JSON.stringify(userWithoutPassword));
-            }
-            })
-        ],
-        callbacks: {
-            async jwt({ token, user }) {
-                if (user) {
-                    // Return a plain, serializable user object
-                    return {
-                        ...token,
-                        user: JSON.parse(JSON.stringify(user)),  // Ensure the user object is serializable
-                    };
-                }
-                return token;
-            },
-            
-            async session({ session, token }) {
-                // Pass a plain user object to the session
+                const { password, _id, ...userWithoutPassword } = existingUser;
+    
                 return {
-                    ...session,
-                    user: token.user,  // Ensure this user object is plain
+                    ...userWithoutPassword,
+                    _id: _id.toString()
                 };
             }
+        })
+    ],
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                return {
+                    ...token,
+                    user: JSON.parse(JSON.stringify(user)),
+                };
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            return {
+                ...session,
+                user: token.user,
+            };
         }
-}
-
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)
+    }
+});
