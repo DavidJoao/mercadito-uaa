@@ -33,10 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                 const { password, _id, ...userWithoutPassword } = existingUser;
     
-                return {
-                    ...userWithoutPassword,
-                    _id: _id.toString()
-                };
+                return userWithoutPassword;
             }
         })
     ],
