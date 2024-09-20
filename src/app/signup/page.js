@@ -1,10 +1,14 @@
 'use client'
 
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { registerUser } from "../lib/actions/auth"
+import { useRouter } from "next/navigation"
+import { logSession } from "../lib/actions/session"
 
 const page = () => {
+
+    const router = useRouter();
 
     //////////////////////////////////////////////////////// INITIAL OBJECTS
     
@@ -18,6 +22,7 @@ const page = () => {
     
     const [form, setForm] = useState(initialForm)
     const [confirm, setConfirm] = useState("")
+    const [session, setSession] = useState(null)
 
     //////////////////////////////////////////////////////// HANDLERS
     const handleChange = (e) => {
@@ -32,6 +37,22 @@ const page = () => {
     const handleSubmit = (e) => {
         registerUser(form)
     }
+
+    useEffect(() => {
+        const checkSession = async () => {
+          try {
+            const userSession = await logSession();
+            setSession(userSession); 
+    
+            if (userSession) {
+              router.push('/home');
+            }
+          } catch (error) {
+            console.error("Error fetching session", error);
+          }
+        };
+        checkSession();
+      }, [router]);
 
   return (
     <div className='main-background w-screen h-screen flex flex-col items-center justify-center'>
