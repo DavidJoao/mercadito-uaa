@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { logoutUser, logSession } from '../lib/actions/session';
+import { logoutUser, logSession } from '../../lib/actions/session';
 
 const Page = () => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const Page = () => {
         setSession(userSession); 
 
         if (!userSession) {
-          router.push('/login');
+          router.push('/pages/login');
         }
       } catch (error) {
         console.error("Error fetching session", error);

@@ -2,9 +2,9 @@
 
 import Link from "next/link"
 import { useState, useEffect } from "react"
-import { registerUser } from "../lib/actions/auth"
+import { registerUser } from "../../lib/actions/auth"
 import { useRouter } from "next/navigation"
-import { logSession } from "../lib/actions/session"
+import { logSession } from "../../lib/actions/session"
 
 const page = () => {
 
@@ -45,7 +45,7 @@ const page = () => {
             setSession(userSession); 
     
             if (userSession) {
-              router.push('/home');
+              router.push('/pages/home');
             }
           } catch (error) {
             console.error("Error fetching session", error);
@@ -69,7 +69,7 @@ const page = () => {
                 <input required placeholder="*********" className="input" type="password" onChange={(e) => setConfirm(e.target.value)}/>
                 { form.password === confirm ? ( <></> ) : ( <p className="red-button text-white font-bold mt-2">Las contraseñas no coinciden</p> ) }
                 <button className="mt-2 blue-button text-white" disabled={form.password === confirm ? false : true}>Registrarte</button>
-                <Link className="mt-5 text-center underline" href={'/login'}>Ya tienes una cuenta? Inicia sesión aquí</Link>
+                <Link className="mt-5 text-center underline" href={'/pages/login'}>Ya tienes una cuenta? Inicia sesión aquí</Link>
                 
             </form>
         </div>

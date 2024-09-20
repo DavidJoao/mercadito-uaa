@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { authenticate, logSession } from "../lib/actions/session"
+import { authenticate, logSession } from "../../lib/actions/session"
 import { useRouter } from "next/navigation"
 import { signIn } from "next-auth/react"
 
@@ -40,7 +40,7 @@ const page = () => {
         email: formData.email,
         password: formData.password,
         redirect: true,
-        redirectTo: '/home'
+        redirectTo: '/pages/home'
       })
       router.refresh();
     } catch (error) {
@@ -65,7 +65,7 @@ const page = () => {
           setSession(userSession); 
   
           if (userSession) {
-            router.push('/home');
+            router.push('/pages/home');
           }
         } catch (error) {
           console.error("Error fetching session", error);
@@ -84,7 +84,7 @@ const page = () => {
             <label>Contraseña</label>
             <input required name="password"placeholder="*********" className="input" type="password" onChange={handleChange}/>
             <button type="submit" className="mt-5 blue-button text-white">Iniciar Sesión</button>
-            <Link className="mt-5 text-center underline" href={'/signup'}>No tienes una cuenta? Crea una aquí</Link>
+            <Link className="mt-5 text-center underline" href={'/pages/signup'}>No tienes una cuenta? Crea una aquí</Link>
         </form>
     </div>
   )

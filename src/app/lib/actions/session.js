@@ -13,7 +13,7 @@ export async function logSession() {
   }
 
 export async function logoutUser () {
-    await signOut({ redirect: true, redirectTo: '/login' });
+    await signOut({ redirect: true, redirectTo: '/pages/login' });
     const session = await auth();
     return session
 }
