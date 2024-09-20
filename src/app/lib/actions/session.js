@@ -2,10 +2,15 @@
 import { signIn, signOut, auth } from "../auth";
 import { AuthError } from "next-auth";
 
-export async function logSession () {
-    const session = await auth();
-    return session
-}
+export async function logSession() {
+    try {
+      const session = await auth();
+      return session;
+    } catch (error) {
+      console.error('Error fetching session:', error);
+      return null;
+    }
+  }
 
 export async function logoutUser () {
     await signOut({ redirect: true, redirectTo: '/login' });
