@@ -1,15 +1,15 @@
 'use client'
 
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { authenticate, logSession } from "../lib/actions/session"
 import { useRouter } from "next/navigation"
 import { signIn } from "next-auth/react"
 
-const page = ({ session }) => {
+const page = () => {
   ///////////////////////////////////////////// VARIABLES
 
-  const router = useRouter()
+  const router = useRouter();
 
   ///////////////////////////////////////////// INITIAL OBJECTS
 
@@ -21,6 +21,7 @@ const page = ({ session }) => {
     ///////////////////////////////////////////// STATES
     
     const [formData, setFormData] = useState(initialFormData)
+    const [session, setSession] = useState(null)
     
     ///////////////////////////////////////////// HANDLERS
 
@@ -54,6 +55,25 @@ const page = ({ session }) => {
     throw error;
     }
   }
+
+    ///////////////////////////////////////////// AUTH SESSION
+
+    useEffect(() => {
+      const checkSession = async () => {
+        try {
+          const userSession = await logSession();
+          setSession(userSession); 
+  
+          if (userSession) {
+            router.push('/home');
+          }
+        } catch (error) {
+          console.error("Error fetching session", error);
+        }
+      };
+      checkSession();
+    }, [router]);
+
 
   return (
     <div className='main-background w-screen h-screen flex flex-col items-center justify-center'>
