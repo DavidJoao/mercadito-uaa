@@ -33,6 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                 const { password, _id, ...userWithoutPassword } = existingUser;
     
+                console.log(userWithoutPassword)
                 return userWithoutPassword;
             }
         })
