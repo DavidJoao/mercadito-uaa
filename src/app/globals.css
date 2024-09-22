@@ -18,6 +18,11 @@
   .input { 
     @apply rounded p-1
   }
+
+  .container {
+    @apply border-[1px] border-black
+  }
+
 }
 
 :root {
