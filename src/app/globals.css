@@ -35,10 +35,16 @@
 .main-background {
   background-image: linear-gradient(
   60deg,
-  hsl(217deg 100% 23%) 0%,
+  #002d75 0%,
   hsl(238deg 24% 64%) 50%,
   hsl(0deg 0% 100%) 100%
 )
+}
+
+.shadow-right {
+-webkit-box-shadow: 10px 2px 30px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 2px 30px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 2px 30px 0px rgba(0,0,0,0.75);
 }
 
 @layer utilities {
