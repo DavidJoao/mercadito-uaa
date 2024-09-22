@@ -24,7 +24,7 @@ export async function authenticate ( formData ) {
             email: formData.email,
             password: formData.password,
             redirect: true,
-            redirectTo: '/home'
+            redirectTo: '/pages/home'
           })
     } catch (error) {
         if (error) {
