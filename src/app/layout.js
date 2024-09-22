@@ -1,6 +1,7 @@
 import "./globals.css";
 import Provider from "./components/context/Provider";
 import { auth } from "./lib/auth";
+import Navbar from "./components/Navbar";
 
 export const metadata = {
   title: "Create Next App",
@@ -15,8 +16,8 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body suppressHydrationWarning={true}>
          <Provider>
+          { session && session ? <Navbar/> : <></>}
           {children}
-          { session && session ? <></> : <></>}
          </Provider>
       </body>
     </html>
