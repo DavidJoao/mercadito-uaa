@@ -9,7 +9,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     secret: process.env.NEXTAUTH_SECRET,
     session: { strategy: "jwt" },
     pages: {
-        signIn: "/login"
+        signIn: "/pages/login",
     },
     providers: [
         Credentials({
@@ -29,11 +29,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
                 const passwordMatch = await bcrypt.compare(credentials.password, existingUser.password)
 
-                if (!passwordMatch) return null
+                if (!passwordMatch) return null;
 
                 const { password, _id, ...userWithoutPassword } = existingUser;
     
-                console.log(userWithoutPassword)
                 return userWithoutPassword;
             }
         })
