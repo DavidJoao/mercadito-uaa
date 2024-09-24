@@ -23,14 +23,16 @@ model User {
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  content   String
-  phone     String
-  date      DateTime
-  authorId  String   @db.ObjectId
-  author    User     @relation(fields: [authorId], references: [id])
-  images    Image[]
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  phone         String
+  instagram     String
+  date          DateTime
+  price         String
+  authorId      String   @db.ObjectId
+  author        User     @relation(fields: [authorId], references: [id])
+  images        Image[]
 }
 
 model Image { 
